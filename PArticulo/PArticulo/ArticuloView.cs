@@ -7,11 +7,42 @@ namespace PArticulo
 {
 	public partial class ArticuloView : Gtk.Window
 	{
+		private IDbConnection dbConnection;
 		public ArticuloView (long id) : base(Gtk.WindowType.Toplevel)
 		{
 			this.Build ();
-
-			IDbCommand dbCommand = ApplicationContext.Instance.DbConnection.CreateCommand();
+			
+			dbConnection = ApplicationContext.Instance.DbConnection;
+			
+			if (id == 0) //nuevo
+				nuevo();
+			else
+				editar(id);
+			
+		}
+		
+		private void nuevo() {
+			//inicializo los controles que quiera
+			entryNombre.Text = "Pon el nombre";
+			spinButtonPrecio.Value = 1;
+			
+			saveAction.Activated += delegate {
+				Console.WriteLine("saveAction.Activated");
+				
+				IDbCommand dbCommand = dbConnection.CreateCommand ();
+				dbCommand.CommandText = "insert into articulo (nombre, precio) values (:nombre, :precio)";
+				
+				DbCommandExtensions.AddParameter (dbCommand, "nombre", entryNombre.Text);
+				DbCommandExtensions.AddParameter (dbCommand, "precio", Convert.ToDecimal (spinButtonPrecio.Value ));
+	
+				dbCommand.ExecuteNonQuery ();
+				
+				Destroy ();
+			};
+		}
+		
+		private void editar(long id) {
+			IDbCommand dbCommand = dbConnection.CreateCommand();
 			dbCommand.CommandText = string.Format ("select * from articulo where id={0}", id);
 			
 			IDataReader dataReader = dbCommand.ExecuteReader ();
@@ -25,7 +56,7 @@ namespace PArticulo
 			saveAction.Activated += delegate {
 				Console.WriteLine("saveAction.Activated");
 				
-				IDbCommand dbUpdateCommand = ApplicationContext.Instance.DbConnection.CreateCommand ();
+				IDbCommand dbUpdateCommand = dbConnection.CreateCommand ();
 				dbUpdateCommand.CommandText = "update articulo set nombre=:nombre, precio=:precio where id=:id";
 				
 				DbCommandExtensions.AddParameter (dbUpdateCommand, "nombre", entryNombre.Text);
@@ -36,14 +67,6 @@ namespace PArticulo
 				
 				Destroy ();
 			};
-		}
-	
-		public static void AddParameter(IDbCommand dbCommand, string name, object value)
-		{
-			IDbDataParameter dbDataParameter = dbCommand.CreateParameter();
-			dbDataParameter.ParameterName = name;
-			dbDataParameter.Value = value;
-			dbCommand.Parameters.Add (dbDataParameter);
 		}
 	}
 }

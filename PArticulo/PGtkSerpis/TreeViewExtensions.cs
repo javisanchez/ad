@@ -25,6 +25,7 @@ namespace Serpis.Ad
 		
 		public static void ClearColumns(TreeView treeView)
 		{
+			treeView.Model = null;//Antes de llamar a Remove Column para evitar los Git
 			TreeViewColumn[] treeViewColumns = treeView.Columns;
 			foreach (TreeViewColumn treeViewColumn in treeViewColumns)
 				treeView.RemoveColumn (treeViewColumn);
