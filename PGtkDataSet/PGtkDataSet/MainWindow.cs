@@ -21,10 +21,12 @@ public partial class MainWindow: Gtk.Window
 	protected void OnExecuteActionActivated (object sender, System.EventArgs e)
 	{
 		string connectionString = "Server=localhost; Database=dbprueba; Id=javi; password=sistemas";
-		IDbConnection dbConnection = new NpgsqlConnection(connectionString);
-		IDbCommand selectCommand = dbConnection.CreateCommand();
+		NpgsqlConnection dbConnection = new NpgsqlConnection(connectionString);
+		NpgsqlCommand selectCommand = dbConnection.CreateCommand();
 		selectCommand.CommandText = "select * from articulo";
-		IDbDataAdapter dbDataAdapter = new NpgsqlDataAdapter();
+		NpgsqlDataAdapter dbDataAdapter = new NpgsqlDataAdapter();
+		new NpgsqlCommandBuilder((NpgsqlDataAdapter)dbDataAdapter);
+		
 		dbDataAdapter.SelectCommand = selectCommand;
 		
 		DataSet dataSet = new DataSet();
@@ -42,8 +44,13 @@ public partial class MainWindow: Gtk.Window
 		Console.WriteLine("Tabla con los cambios:");
 			show (dataSet.Tables[0]);
 			
-		dbDataAdapter.Update (dataSet);	
-		}
+//		dbDataAdapter.RowUpdated +- delegate(object dbDadapterSender, NpgsqlRowUpdatingEventArgs eventArgs){	
+//			Console.WriteLine("RowUpdating command.CommandText= {0}", EventArgs.Command.CommantText);
+//				
+//			foreach (IDataParameter dataParameter in EventArgs.Command.Parameters)
+//					Console.WriteLine ("{0}={1}", dataParameter.ParameterName, dataParameter.Value);
+			};                         
+			dbDataAdapter.Update(dataSet.Tables[0]);
 	}
 	
 	private void show(DataTable dataTable){
