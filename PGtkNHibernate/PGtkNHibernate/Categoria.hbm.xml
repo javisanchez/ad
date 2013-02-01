@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<hibernate-mapping xmlsn="urn:nhibernate-mapping-2.2"
+				   assembly="PGtkNHibernate"
+				   namespace="PGtkNHibernate">
+	
+	<class name = "Categoria">
+		<id name="Id" unsaved-value="0"/>.
+			<generator class="sequence">
+				<param name="sequence">categoria_id_seq</param>
+			</generator>
+			<property name="Nombre"/>
+	</class>
+	
+</hibernate-mapping>
+	
+
