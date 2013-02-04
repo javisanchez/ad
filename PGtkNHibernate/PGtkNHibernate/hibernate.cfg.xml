@@ -1,13 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<hibernate-configuration xmlns="urn:nhibernate-configuration-2.2">
-  <session-factory>
-    <property name="connection.provider">NHibernate.Connection.DriverConnectionProvider</property>
-    <property name="dialect">NHibernate.Dialect.PostgresSqlCeDialect</property>
-    <property name="connection.driver_class">NHibernate.Driver.NpgsqlDriver</property>
-    <property name="connection.connection_string">server=localhost; Database=dbprueba; User=javi; Password=sistemas</property>
-    <property name="show_sql">true</property>
-  </session-factory>
+<hibernate-configuration  xmlns="urn:nhibernate-configuration-2.2" >
+	<session-factory name="NHibernate.Test">
+		<property name="connection.driver_class">NHibernate.Driver.NpgsqlDriver</property>
+		<property name="connection.connection_string">
+			Server=localhost;Database=dbprueba;User=javi ID=nhibernate;Password=sistemas;
+		</property>
+		<property name="dialect">NHibernate.Dialect.PostgreSQL82Dialect</property>
+	</session-factory>
 </hibernate-configuration>
-
-
-
