@@ -76,6 +76,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Categoria.cs" />
+    <Compile Include="Articulo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -83,5 +84,6 @@
     <None Include="MainWindow.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Articulo.hbm.xml" />
   </ItemGroup>
 </Project>

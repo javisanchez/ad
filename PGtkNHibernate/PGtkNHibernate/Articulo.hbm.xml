@@ -3,14 +3,14 @@
 				   assembly="PGtkNHibernate"
 				   namespace="Serpis.Ad">
 	
-	<class name = "Categoria">
+	<class name = "Articulo">
 		<id name="Id" unsaved-value="0"/>.
 			<generator class="sequence">
-				<param name="sequence">categoria_id_seq</param>
+				<param name="sequence">articulo_id_seq</param>
 			</generator>
 			<property name="Nombre"/>
+			<property name="Precio"/>
+			<!--      CREAR <property name="Categoria"/>      -->
 	</class>
 	
 </hibernate-mapping>
-	
-

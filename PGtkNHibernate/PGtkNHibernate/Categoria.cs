@@ -1,6 +1,6 @@
 using System;
 
-namespace PGtkNHibernate
+namespace Serpis.Ad
 {
 	public class Categoria
 	{

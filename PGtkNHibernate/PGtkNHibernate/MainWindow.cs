@@ -8,6 +8,8 @@ using NHibernate.Tool.hbm2ddl;
 
 using PGtkNHibernate;
 
+using Serpis.Ad;
+
 public partial class MainWindow: Gtk.Window
 {	
 	public MainWindow (): base (Gtk.WindowType.Toplevel)
