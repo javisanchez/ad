@@ -77,13 +77,13 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Categoria.cs" />
     <Compile Include="Articulo.cs" />
+    <Compile Include="MainWindow.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="hibernate.cfg.xml" />
-    <None Include="MainWindow.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Articulo.hbm.xml" />
   </ItemGroup>
 </Project>

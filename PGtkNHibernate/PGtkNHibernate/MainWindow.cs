@@ -1,14 +1,12 @@
-using System;
 using Gtk;
-
 using NHibernate;
-
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
-
 using PGtkNHibernate;
-
 using Serpis.Ad;
+using System;
+using System.Collections;
+
 
 public partial class MainWindow: Gtk.Window
 {	
@@ -24,13 +22,50 @@ public partial class MainWindow: Gtk.Window
 		
 		ISessionFactory sessionFactory = configuration.BuildSessionFactory();
 		
-		updateCategoria(sessionFactory);
+		//updateCategoria(sessionFactory);
 			
-		insertCategoria(sessionFactory);
+		//insertCategoria(sessionFactory);
+		
+		//loadArticulo(sessionFactory);
+		
+		
+		ISession session = sessionFactory.OpenSession();
+		ICriteria criteria = sessionFactory.CreateCriteria(typeof(Articulo));
+		IList list = criteria.List();
+		foreach (Articulo articulo in list)
+			Console.WriteLine("Articulo Id={0} Nombre={1} Precio={2}",
+			                  articulo.Id, articulo.Nombre, articulo.Precio);
+		session.Close ();
 		
 		sessionFactory.Close();
 	}
+		
+//		ESTA SERIA LA MANERA MÁS CORRECTA DE ESCRIBIRLO
 	
+//		using (ISession session = sessionFactory.OpenSession()){
+//		ICriteria criteria = sessionFactory.CreateCriteria(typeof(Categoria));
+//		IList list = criteria.List();
+//		foreach (Categoria categoria in list)
+//			Console.WriteLine("Categoria Id={0} Nombre={1}",
+//			                  categoria.Id, categoria.Nombre);
+//		}
+//		
+//		sessionFactory.Close();
+//	}
+	
+	private void loadArticulo(ISessionFactory sessionFactory){
+		using (ISession session = sessionFactory.OpenSession()){
+			Articulo articulo = (Articulo) session.Load(typeof(Articulo), 2L);
+			Console.WriteLine ("Articulo Id={0} Nombre={1} Precio{2}",
+			                   articulo.Id, articulo.Nombre, articulo.Precio);
+			if (articulo.Categoria == null)
+				Console.WriteLine ("Categoria = null");
+			else
+				Console.WriteLine("Categoria.Id={0}", articulo.Categoria.Id);
+				//Console.WriteLine("Categoria.Nombre={0}", articulo.Categoria.Nombre);
+		}
+	}
+		
 	private void updateCategoria(ISessionFactory sessionFactory){
 		ISession session = sessionFactory.OpenSession();//Esta linea debe estar dentro ya que si hay alguna excepción no se ejecutará y el close siempre se ejecutará.
 		try{
@@ -48,7 +83,7 @@ public partial class MainWindow: Gtk.Window
 	private void insertCategoria(ISessionFactory sessionFactory){
 		using (ISession session = sessionFactory.OpenSession()){
 			Categoria categoria = new Categoria();
-			Categoria.Nombre = "Nueva " + DateTime.Now.ToString();
+			Categoria.Nombre ="Nueva " + DateTime.Now.ToString();
 			session.SaveOrUpdate (categoria);		
 			session.Flush();	
 		}

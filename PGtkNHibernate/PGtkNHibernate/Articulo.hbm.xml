@@ -10,7 +10,7 @@
 			</generator>
 			<property name="Nombre"/>
 			<property name="Precio"/>
-			<!--      CREAR <property name="Categoria"/>      -->
+			<many-to-one name= "Categoria"/>
 	</class>
 	
 </hibernate-mapping>
